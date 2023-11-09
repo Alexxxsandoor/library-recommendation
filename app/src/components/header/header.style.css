@@ -1,0 +1,12 @@
+#header a {
+    color: white;
+    text-decoration: none !important;
+}
+
+#header-nav a {
+    margin-right: 20px !important;
+}
+
+#header #logo {
+    text-transform: uppercase;
+}
