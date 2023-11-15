@@ -2,6 +2,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import img from '../../images/hero.png'
 
 const SingIn = () => {
     const [login, setLogin] = useState('')
@@ -11,7 +12,12 @@ const SingIn = () => {
     return (
         <div className='sing-in-view'>
             <div className="container">
+                <div className='d-flex justify-content-center py-2'>
+                    <img width='200' src={img}/>
+                </div>
+                
                 <div className='py-4'>
+                
                     <Form.Label htmlFor="inputLogin">Login</Form.Label>
                     <Form.Control
                         type="text"
@@ -19,6 +25,7 @@ const SingIn = () => {
                         onChange={(e)=>setLogin(e.target.value)}
                     />
                     <Form.Label htmlFor="inputPassword">Password</Form.Label>
+                    
                     <Form.Control
                         type="password"
                         id="inputPassword"
