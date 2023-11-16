@@ -6,9 +6,14 @@ class RevService{
         return createdReviews 
     }
     async getReviewsByBook(id){
-        if(!id) throw new Error('Problem with id')
+        if(!id) throw new Error('Problem with book id')
         const reviewsBook = await Rev.find({bookID: id})
         return reviewsBook 
+    }
+    async getUserReviews(id){
+        if(!id) throw new Error('Problem with user id')
+        const UserReviews = await Rev.find({userID: id})
+        return UserReviews 
     }
 }
 

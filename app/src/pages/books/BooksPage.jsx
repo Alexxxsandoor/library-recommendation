@@ -1,39 +1,61 @@
-import React, { useId, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import BooksList from '../../components/booksList/BooksList';
-import books from '../../store/books'
 import Form from 'react-bootstrap/Form';
 import Dropdown from 'react-bootstrap/Dropdown';
+import API_SERVER from '../../constants';
+import SnipperLoader from '../../components/snipperLoader/SnipperLoader';
+import {GET_LIST_BOOK} from '../../API';
 
 const BooksPage = (props) => {
     const {admin} = props
 
-    const [bookChoose, setBookChoose] = useState(books)
-    const handleSelectBook = (e) =>{
+    const [loader, serLoader] = useState(true)
+    const [bookList, setBookList] = useState([])
+    const [bookChoose, setBookChoose] = useState([])
+    const [genres, setGenres] = useState([])
+
+    //search for a book by title
+    const handleSelectBookName = (e) =>{
         const inputValue = e.target.value.toLowerCase()
         const selectedBook = []
-
-        if(!inputValue) setBookChoose(books)
+        if(!inputValue) setBookChoose(bookList)
         else {
-            books.map(book => book.name.toLowerCase().includes(inputValue) ? selectedBook.push(book) : null)
+            bookList.map(book => book.name.toLowerCase().includes(inputValue) ? selectedBook.push(book) : null)
             setBookChoose(selectedBook)
         }        
     }
-    const genre = []
-    books.map(book => genre.push(book.genre))
-    const uniqueGenres = new Set(genre);
-    const genresArray = Array.from(uniqueGenres);
 
-    const handleChooseGenre = (genre)=>{
-        if(genre.toLowerCase() == 'all')   setBookChoose(books)
+    //search for a book by genre
+    const handleSelectBookGenre = (genre)=>{
+        if(genre === "All") setBookChoose(bookList)
         else{
             const selectedBooks = []
-            books.map(book => book.genre.toLowerCase() == genre.toLowerCase() ? selectedBooks.push(book) : null)
+            bookList.map(book => book.genre.toLowerCase() == genre.toLowerCase() ? selectedBooks.push(book) : null)
             setBookChoose(selectedBooks)
         }
-        
     }
 
+    const genreList = ()=>{
+        const genre = []
+        bookList.map(book => genre.push(book.genre))
+        const uniqueGenres = new Set(genre);
+        setGenres(Array.from(uniqueGenres));
+    }
 
+    
+    //getting a list from the database
+    useEffect(()=>{
+        GET_LIST_BOOK(setBookList)
+    },[])
+
+    //leaving the list inside js
+    useEffect(()=>{
+        setBookChoose(bookList)
+        serLoader(false)
+        genreList()
+    },[bookList])
+    
     return (
         <div className='books-view'>
             <div className='container py-3'>
@@ -42,7 +64,8 @@ const BooksPage = (props) => {
                     <Form.Control
                         type="text"
                         id="inputName"
-                        onChange={handleSelectBook}
+                        placeholder='Пошук за назвою'
+                        onChange={handleSelectBookName}
                     />
                     <Dropdown>
                         <Dropdown.Toggle variant="success" id="dropdown-basic">
@@ -50,15 +73,16 @@ const BooksPage = (props) => {
                         </Dropdown.Toggle>
 
                         <Dropdown.Menu>
-                            <Dropdown.Item onClick={()=>handleChooseGenre('All')} value={'All'}>All</Dropdown.Item>
-                            {genresArray.map(genre=><Dropdown.Item onClick={()=>handleChooseGenre(genre)} key={new Date() + genre} value={genre}>{genre}</Dropdown.Item>)}
+                            <Dropdown.Item onClick={()=>handleSelectBookGenre('All')} value={'All'}>All</Dropdown.Item>
+                            {genres.map(genre=><Dropdown.Item onClick={()=>handleSelectBookGenre(genre)} key={new Date() + genre} value={genre}>{genre}</Dropdown.Item>)}
                         </Dropdown.Menu>
                     </Dropdown>
                 </div>
                 
             
             </div>
-            <BooksList admin={admin} booksList={bookChoose} />
+            {loader? <SnipperLoader /> :<BooksList admin={admin} booksList={bookChoose} />}
+            
         </div>
     );
 };

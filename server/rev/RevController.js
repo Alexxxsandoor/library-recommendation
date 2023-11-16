@@ -17,6 +17,14 @@ class RevController{
             res.status(500).json(e.message)
         }
     }
+    async getUserReviews(req,res){
+        try {
+            const user = await RevService.getUserReviews(req.params.id)
+            res.json(user)
+        } catch (e) {
+            res.status(500).json(e.message)
+        }
+    }
 }
 
 export default new RevController()
