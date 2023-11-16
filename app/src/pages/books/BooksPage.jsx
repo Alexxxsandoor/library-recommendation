@@ -39,8 +39,7 @@ const BooksPage = (props) => {
     const genreList = ()=>{
         const genre = []
         bookList.map(book => genre.push(book.genre))
-        const uniqueGenres = new Set(genre);
-        setGenres(Array.from(uniqueGenres));
+        setGenres(Array.from(new Set(genre)));
     }
 
     
