@@ -3,8 +3,6 @@ import BooksItem from './BooksItem';
 
 const BooksList = (props) => {
     const {admin,booksList} = props
-
-
     return (
         <div className='books-list'>
             <div className="container">

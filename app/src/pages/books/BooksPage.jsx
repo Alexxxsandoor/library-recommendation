@@ -3,7 +3,7 @@ import BooksList from '../../components/booksList/BooksList';
 import Form from 'react-bootstrap/Form';
 import Dropdown from 'react-bootstrap/Dropdown';
 import SnipperLoader from '../../components/snipperLoader/SnipperLoader';
-import {FUNC_GET_LIST_BOOK} from '../../API';
+import {FUNC_GET_LIST_BOOK} from '../../API_books';
 
 const BooksPage = (props) => {
     const {admin} = props
@@ -62,7 +62,7 @@ const BooksPage = (props) => {
     return (
         <div className='books-view'>
             <div className='container py-3'>
-                <h2>Books List</h2>
+                <h2>Список Книг</h2>
                 <div className='d-flex'>
                     <Form.Control
                         type="text"

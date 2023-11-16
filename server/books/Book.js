@@ -6,6 +6,7 @@ const Book = new mongoose.Schema({
     genre:{type: String},
     description:{type: String},
     image:{type: String},
+    pdf_url:{type: String}
 })
 
 export default mongoose.model("Book", Book)

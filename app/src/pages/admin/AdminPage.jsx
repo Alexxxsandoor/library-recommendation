@@ -1,5 +1,4 @@
 import React from 'react';
-import books from '../../store/books'
 import AdminModalAddBook from './AdminModalAddBook';
 import BooksPage from '../books/BooksPage';
 
