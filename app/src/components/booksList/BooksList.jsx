@@ -9,7 +9,7 @@ const BooksList = (props) => {
         <div className='books-list'>
             <div className="container">
                 <div className='d-flex flex-wrap'>
-                    {booksList.map(book => <BooksItem key={book._id.$oid} admin={admin} {...book}/>)}
+                    {booksList.map(book => <BooksItem key={book._id} admin={admin} {...book}/>)}
                 </div>
             </div>
         </div>

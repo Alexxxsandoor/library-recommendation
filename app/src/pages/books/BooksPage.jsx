@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import BooksList from '../../components/booksList/BooksList';
 import Form from 'react-bootstrap/Form';
 import Dropdown from 'react-bootstrap/Dropdown';
-import API_SERVER from '../../constants';
 import SnipperLoader from '../../components/snipperLoader/SnipperLoader';
 import {GET_LIST_BOOK} from '../../API';
 
@@ -27,11 +25,17 @@ const BooksPage = (props) => {
     }
 
     //search for a book by genre
-    const handleSelectBookGenre = (genre)=>{
-        if(genre === "All") setBookChoose(bookList)
+    const handlelSortBooks = (sort)=>{
+        if(sort === "All") setBookChoose(bookList)
+        else if(sort == "name_a"){
+            setBookChoose([...bookList].sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1)); 
+        }
+        else if(sort == "name_z"){
+            setBookChoose([...bookList].sort((a, b) => a.name.toLowerCase() < b.name.toLowerCase() ? 1 : -1))
+        }
         else{
             const selectedBooks = []
-            bookList.map(book => book.genre.toLowerCase() == genre.toLowerCase() ? selectedBooks.push(book) : null)
+            bookList.map(book => book.genre.toLowerCase() == sort.toLowerCase() ? selectedBooks.push(book) : null)
             setBookChoose(selectedBooks)
         }
     }
@@ -42,7 +46,6 @@ const BooksPage = (props) => {
         setGenres(Array.from(new Set(genre)));
     }
 
-    
     //getting a list from the database
     useEffect(()=>{
         GET_LIST_BOOK(setBookList)
@@ -67,15 +70,24 @@ const BooksPage = (props) => {
                         onChange={handleSelectBookName}
                     />
                     <Dropdown>
-                        <Dropdown.Toggle variant="success" id="dropdown-basic">
-                            Dropdown Button
+                        <Dropdown.Toggle variant="success" id="dropdown-genre" className='mx-2'>
+                            Пошук за жанром
                         </Dropdown.Toggle>
-
                         <Dropdown.Menu>
-                            <Dropdown.Item onClick={()=>handleSelectBookGenre('All')} value={'All'}>All</Dropdown.Item>
-                            {genres.map(genre=><Dropdown.Item onClick={()=>handleSelectBookGenre(genre)} key={new Date() + genre} value={genre}>{genre}</Dropdown.Item>)}
+                            <Dropdown.Item onClick={()=>handlelSortBooks('All')} value={'All'}>All</Dropdown.Item>
+                            {genres.map(genre=><Dropdown.Item onClick={()=>handlelSortBooks(genre)} key={new Date() + genre} value={genre}>{genre}</Dropdown.Item>)}
                         </Dropdown.Menu>
                     </Dropdown>
+                    <Dropdown>
+                        <Dropdown.Toggle variant="success" id="dropdown-sort">
+                            Сортвувати за...
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                            <Dropdown.Item key={new Date() + "name_a"} onClick={()=>{handlelSortBooks("name_a")}}>Назвою А-Я</Dropdown.Item>
+                            <Dropdown.Item key={new Date() + "name_z"} onClick={()=>{handlelSortBooks("name_z")}}>Назвою Я-А</Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
+                    
                 </div>
                 
             
