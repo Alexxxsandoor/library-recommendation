@@ -3,7 +3,7 @@ import BooksList from '../../components/booksList/BooksList';
 import Form from 'react-bootstrap/Form';
 import Dropdown from 'react-bootstrap/Dropdown';
 import SnipperLoader from '../../components/snipperLoader/SnipperLoader';
-import {GET_LIST_BOOK} from '../../API';
+import {FUNC_GET_LIST_BOOK} from '../../API';
 
 const BooksPage = (props) => {
     const {admin} = props
@@ -48,14 +48,15 @@ const BooksPage = (props) => {
 
     //getting a list from the database
     useEffect(()=>{
-        GET_LIST_BOOK(setBookList)
+        FUNC_GET_LIST_BOOK(setBookList);
+        serLoader(true)
     },[])
 
     //leaving the list inside js
     useEffect(()=>{
         setBookChoose(bookList)
-        serLoader(false)
         genreList()
+        serLoader(false)
     },[bookList])
     
     return (
@@ -87,7 +88,6 @@ const BooksPage = (props) => {
                             <Dropdown.Item key={new Date() + "name_z"} onClick={()=>{handlelSortBooks("name_z")}}>Назвою Я-А</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
-                    
                 </div>
                 
             
