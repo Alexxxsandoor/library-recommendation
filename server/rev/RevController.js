@@ -25,6 +25,14 @@ class RevController{
             res.status(500).json(e.message)
         }
     }
+    async deleteReview(req,res){
+        try {
+            const user = await RevService.deleteReview(req.params.id)
+            res.json(user)
+        } catch (e) {
+            res.status(500).json(e.message)
+        }
+    }
 }
 
 export default new RevController()

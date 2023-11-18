@@ -32,10 +32,10 @@ const AdminModalAddBook = () => {
           Завантажити 103 книги
         </Button>
         <Button variant="danger" onClick={()=>FUNC_DELETE_ALL_BOOKS(alert)}>
-          Выдалити всі книги
+          Видалити всі книги
         </Button>
   
-        <Modal show={show} onHide={handleClose}>
+        <Modal show={show} onHide={()=>setShow(false)}>
           <Modal.Header closeButton>
             <Modal.Title>Додавання книги</Modal.Title>
           </Modal.Header>

@@ -19,7 +19,7 @@ class UserService{
     async getOne(id){
         if(!id)throw new Error("id false")
         const findUser = await User.findById(id)
-        return {_id: findUser._id, login:findUser.login}
+        return findUser.login
     }
 }
 

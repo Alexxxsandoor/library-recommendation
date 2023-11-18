@@ -26,8 +26,8 @@ const AdminModalChangedBook = (props) => {
 
     return (
         <>
-        <Button variant="warning" onClick={handleShow}>
-            Changed
+        <Button className='m-1' variant="warning" onClick={handleShow}>
+            Редагувати
         </Button>
   
         <Modal show={show} onHide={()=>setShow(false)}>

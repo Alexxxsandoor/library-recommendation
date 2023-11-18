@@ -2,11 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import { FUNC_GET_BOOK_BY_ID } from '../../API/API_books';
+import { useSelector } from 'react-redux';
+import Feedback from '../../components/feedback/Feedback';
 
 
 const BookSelectedPage = () => {
+    const user = useSelector(state=>state.user.user)
+
     const { id } = useParams()
-    const [book, setBook] = useState()
+    const [book, setBook] = useState([])
 
     const handleAddedBook = (name)=>{
         alert(`${name} added to favorites`)
@@ -20,10 +24,9 @@ const BookSelectedPage = () => {
         <div className='book-view'>
             <div className="container">
                 <div className='d-flex justify-content-between'>
-                    <Button className='mt-3'><Link className="text-white" to={`/books`}>Назад</Link></Button>
-                    <Button onClick={()=>handleAddedBook(book.name)} className='mt-3' variant="success">Додати в улюблені</Button>
+                    <Button className='mt-3'><Link className="text-white" to={!user.isAdmin ? `/books` : `/`}>Назад</Link></Button>
+                    {user.isLogin &&<Button onClick={()=>handleAddedBook(book.name)} className='mt-3' variant="success">Додати в улюблені</Button>}
                 </div>
-                
                 {book ? 
                 <div className='d-flex py-5'>
                         {book.image && <img style={{maxWidth:'350px'}} src={book.image} alt="" />}
@@ -38,7 +41,7 @@ const BookSelectedPage = () => {
                 :
                 <h1 className='text-center py-4'>Book not found</h1>    
             }
-                
+                <Feedback/>
             </div>
         </div>
     );

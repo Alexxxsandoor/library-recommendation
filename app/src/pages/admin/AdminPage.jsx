@@ -7,7 +7,7 @@ const AdminPage = () => {
         <div className='admin-view'>
             <div className="container py-4">
                 <AdminModalAddBook/>
-                <BooksPage admin={true}/>
+                <BooksPage/>
             </div>
         </div>
     );

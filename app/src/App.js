@@ -1,7 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-
 import Error from './pages/error/ErrorPage';
-import HomePage from './pages/home/HomePage';
 import Header from './components/header/Header';
 import AdminPage from './pages/admin/AdminPage';
 import AboutPage from './pages/about/AboutPage';
@@ -10,21 +8,23 @@ import BooksPage from './pages/books/BooksPage';
 import BookSelectedPage from './pages/books/BookSelectedPage';
 import SingIn from './pages/sing-in/SingIn'
 import UserPage from './pages/user/UserPage';
-import axios from 'axios';
+import { useSelector } from 'react-redux';
+
+
+
 
 const App = () => {
+	const user = useSelector(state=>state.user.user)
+
     return (
         <>
             <BrowserRouter>
 					<Header/>
 					<Routes >
-						<Route path='/' element={<HomePage />} />
+						<Route path='/' element={user.isLogin ? (user.isAdmin ? <AdminPage /> : <UserPage />) : <SingIn/>} />
 						<Route path='/about' element={<AboutPage />} />
-						<Route path='/admin' element={<AdminPage />} />
-						<Route path='/user' element={<UserPage />} />
 						<Route path='/books' element={<BooksPage/>} />
 						<Route path='/book/:id' element={<BookSelectedPage/>} />
-						<Route path='/sign-in' element={<SingIn/>} />
 						<Route path='*' element={<Error />} />
 					</Routes>
 					<Footer/>

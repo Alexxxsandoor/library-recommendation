@@ -6,8 +6,6 @@ import SnipperLoader from '../../components/snipperLoader/SnipperLoader';
 import {FUNC_GET_LIST_BOOK} from '../../API/API_books';
 
 const BooksPage = (props) => {
-    const {admin} = props
-
     const [loader, serLoader] = useState(true)
     const [bookList, setBookList] = useState([])
     const [bookChoose, setBookChoose] = useState([])
@@ -95,8 +93,8 @@ const BooksPage = (props) => {
             {loader ? 
                 <SnipperLoader /> 
                 : bookChoose.length > 0 ? 
-                <BooksList admin={admin} booksList={bookChoose} /> 
-                : <h2 className='text-center'>Книг немає</h2>}
+                <BooksList booksList={bookChoose} /> 
+                : <SnipperLoader /> }
             
         </div>
     );

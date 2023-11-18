@@ -15,6 +15,11 @@ class RevService{
         const UserReviews = await Rev.find({userID: id})
         return UserReviews 
     }
+    async deleteReview(id){
+        if(!id) throw new Error('Problem with user id')
+        const UserReviews = await Rev.findByIdAndDelete(id)
+        return UserReviews 
+    }
 }
 
 export default new RevService()

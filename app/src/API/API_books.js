@@ -1,5 +1,5 @@
 import axios from "axios";
-import API_SERVER from "../constants";
+import API_SERVER from "./API";
 
 export const FUNC_CREATE_BOOK = (func, book) => {
     axios.post(`${API_SERVER}/books`, book)

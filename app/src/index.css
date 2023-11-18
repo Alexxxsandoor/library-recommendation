@@ -8,7 +8,7 @@ body {
 
 div[class*="-view"] {
   /* windows - header - footer - footer-margin */
-  min-height: calc(100vh - 64px - 47.19px - 24px);
+  min-height: calc(100vh - 70px - 40px - 24px);
 }
 
 code {

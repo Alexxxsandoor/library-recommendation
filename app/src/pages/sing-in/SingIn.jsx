@@ -1,29 +1,32 @@
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import {  useState } from 'react';
+import {  useEffect, useState } from 'react';
 import { useDispatch} from 'react-redux';
 import img from '../../images/hero.png'
 import { FUNC_CREATE_USER, FUNC_LOGIN_USER } from '../../API/API_users';
 import { setUser } from '../../store/user/userSlice'
 
 const SingIn = () => {
-    
-
     const dispatch = useDispatch()
+    const [user, setUserInputs] = useState({
+        login:"",
+        password:""
+    })
+    const [button, seButton] = useState("disabled")
+
+
     const loginUser = (user)=> {
+        const {_id, login,  admin} = user._doc
         const userLogin = {
-            _id:user._id,
-            loginName:user.login,
-            isAdmin:user.admin,
+            _id:_id,
+            loginName:login,
+            isAdmin:admin,
             isLogin: true,
         }
         dispatch(setUser(userLogin))
     }
 
-    const [user, setUserInputs] = useState({
-        login:"",
-        password:""
-    })
+    
     const handleLogin = ()=>{
         if(user.login && user.password) FUNC_LOGIN_USER(loginUser, user)
         setUserInputs({
@@ -40,6 +43,10 @@ const SingIn = () => {
     }
     
 
+    useEffect(()=>{
+        if(user.login && user.password) seButton("")
+        else seButton("disabled")
+    },[user])
 
 
     return (
@@ -66,8 +73,8 @@ const SingIn = () => {
                         value={user.password}
                         onChange={(e)=>setUserInputs({...user,password:e.target.value})}
                     />
-                    <Button className='m-2' variant="success" onClick={()=>handleLogin()}>Увійти</Button>
-                    <Button className='m-2' variant="primary" onClick={()=>handleCreateUser()}>Зареєструвати</Button>
+                    <Button className={"m-2" + " " + button} variant="success" onClick={()=>handleLogin()}>Увійти</Button>
+                    <Button className={"m-2"+ " " + button} variant="primary" onClick={()=>handleCreateUser()}>Зареєструвати</Button>
                 </div>
             </div>
         </div>
