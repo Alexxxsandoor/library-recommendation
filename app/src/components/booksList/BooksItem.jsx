@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
 import AdminModalChangedBook from '../../pages/admin/AdminModalChangedBook';
-import { FUNC_DELETE_BOOK_BY_ID } from '../../API_books';
+import { FUNC_DELETE_BOOK_BY_ID } from '../../API/API_books';
 
 const BooksItem = (props) => {
     const {_id, name, author,genre, description, image,admin} = props

@@ -3,7 +3,7 @@ import BooksList from '../../components/booksList/BooksList';
 import Form from 'react-bootstrap/Form';
 import Dropdown from 'react-bootstrap/Dropdown';
 import SnipperLoader from '../../components/snipperLoader/SnipperLoader';
-import {FUNC_GET_LIST_BOOK} from '../../API_books';
+import {FUNC_GET_LIST_BOOK} from '../../API/API_books';
 
 const BooksPage = (props) => {
     const {admin} = props
@@ -92,7 +92,11 @@ const BooksPage = (props) => {
                 
             
             </div>
-            {loader? <SnipperLoader /> :<BooksList admin={admin} booksList={bookChoose} />}
+            {loader ? 
+                <SnipperLoader /> 
+                : bookChoose.length > 0 ? 
+                <BooksList admin={admin} booksList={bookChoose} /> 
+                : <h2 className='text-center'>Книг немає</h2>}
             
         </div>
     );

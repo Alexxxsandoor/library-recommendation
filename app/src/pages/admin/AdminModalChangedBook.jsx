@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
-import { FUNC_CHANGE_BOOK } from '../../API_books';
+import { FUNC_CHANGE_BOOK } from '../../API/API_books';
 
 const AdminModalChangedBook = (props) => {
     const {_id, name, author,genre, description,image, pdf_url} = props.book

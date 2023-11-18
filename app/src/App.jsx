@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+
 import Error from './pages/error/ErrorPage';
 import HomePage from './pages/home/HomePage';
 import Header from './components/header/Header';
@@ -9,7 +10,7 @@ import BooksPage from './pages/books/BooksPage';
 import BookSelectedPage from './pages/books/BookSelectedPage';
 import SingIn from './pages/sing-in/SingIn'
 import UserPage from './pages/user/UserPage';
-import Register from './pages/sing-in/Register';
+import axios from 'axios';
 
 const App = () => {
     return (
@@ -24,12 +25,10 @@ const App = () => {
 						<Route path='/books' element={<BooksPage/>} />
 						<Route path='/book/:id' element={<BookSelectedPage/>} />
 						<Route path='/sign-in' element={<SingIn/>} />
-						<Route path='/register' element={<Register/>} />
 						<Route path='*' element={<Error />} />
 					</Routes>
 					<Footer/>
 			</BrowserRouter>
-
         </>
     );
 };

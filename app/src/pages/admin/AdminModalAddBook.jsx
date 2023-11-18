@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
-import { FUNC_CREATE_BOOK, FUNC_CREATE_MANY_BOOK, FUNC_DELETE_ALL_BOOKS } from '../../API_books';
+import { FUNC_CREATE_BOOK, FUNC_CREATE_MANY_BOOK, FUNC_DELETE_ALL_BOOKS } from '../../API/API_books';
 
 const AdminModalAddBook = () => {
     const [show, setShow] = useState(false);

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
-import { FUNC_GET_BOOK_BY_ID } from '../../API_books';
+import { FUNC_GET_BOOK_BY_ID } from '../../API/API_books';
 
 
 const BookSelectedPage = () => {
