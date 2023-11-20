@@ -9,12 +9,16 @@ const corsOptions = {
 import bookRouter from './books/BookRouter.js';
 import userRouter from './users/UserRouter.js';
 import revRouter from './rev/RevRouter.js';
+import favoriteRouter from './favorite/FavoriteRouter.js';
+import recommendationsRouter from './recommendations/RecommendationsRouter.js';
 
 const PORT = 3001;
+
+//!!-----------------
 const DB_USERNAME = 'vverstukov14'
 const DB_PASSWORD = 'DZCgxAkDOAlw5Bb8'
 const DB_URL = `mongodb+srv://${DB_USERNAME}:${DB_PASSWORD}@cluster0.nym1fvt.mongodb.net/?retryWrites=true&w=majority`
-
+//!!-----------------
 
 
 const app = express()
@@ -24,6 +28,8 @@ app.use(cors(corsOptions))
 app.use('/api', bookRouter)
 app.use('/api', userRouter)
 app.use('/api', revRouter)
+app.use('/api', favoriteRouter)
+app.use('/api', recommendationsRouter)
 
 async function startApp(){
     try {

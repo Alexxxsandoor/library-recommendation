@@ -23,7 +23,7 @@ const Header = () => {
               {user.isLogin &&<Link to="/">Особиста сторінка</Link>}
               {user.isLogin && <b className='p-2'>Користувач: {user.loginName}{user.isAdmin && "🛡️"}</b>}
               {user.isLogin && <Button variant="secondary" onClick={handleLogout}>Вийти з аккаунту</Button>}
-              {!user.isLogin && <Link to="/"><Button variant="success">Увійти</Button></Link>}
+              {!user.isLogin && <Link to="/"><Button variant="success">Особистий кабінет</Button></Link>}
             </div>
           </div>
         </div>

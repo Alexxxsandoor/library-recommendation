@@ -1,12 +1,13 @@
 import Router from 'express'
-import FavoriteController from './FavoriteController'
+import FavoriteController from './FavoriteController.js'
 
-const FavoriteRouter = new Router()
+const favoriteRouter = new Router()
 
-FavoriteRouter.post("/favorite", FavoriteController.create)
-FavoriteRouter.get("/favorite/:id", FavoriteController.getUsersFavorite)
+favoriteRouter.post("/favorite", FavoriteController.create)
+favoriteRouter.get("/favorite/:id", FavoriteController.getUsersFavorite)
+favoriteRouter.delete("/favorite", FavoriteController.delete)
 
 
 
 
-export default FavoriteRouter
+export default favoriteRouter

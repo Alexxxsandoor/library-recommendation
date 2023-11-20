@@ -9,6 +9,7 @@ import BookSelectedPage from './pages/books/BookSelectedPage';
 import SingIn from './pages/sing-in/SingIn'
 import UserPage from './pages/user/UserPage';
 import { useSelector } from 'react-redux';
+import { useState } from 'react';
 
 
 
@@ -23,7 +24,7 @@ const App = () => {
 					<Routes >
 						<Route path='/' element={user.isLogin ? (user.isAdmin ? <AdminPage /> : <UserPage />) : <SingIn/>} />
 						<Route path='/about' element={<AboutPage />} />
-						<Route path='/books' element={<BooksPage/>} />
+						{!user.isAdmin && <Route path='/books' element={<BooksPage/>} />}
 						<Route path='/book/:id' element={<BookSelectedPage/>} />
 						<Route path='*' element={<Error />} />
 					</Routes>

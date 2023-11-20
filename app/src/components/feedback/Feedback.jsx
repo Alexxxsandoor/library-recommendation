@@ -7,6 +7,7 @@ import FeedbackList from './FeedbackList';
 import Button from 'react-bootstrap/Button';
 import { FUNC_CREATE_REVIEWS } from '../../API/API_reviews';
 import { useParams } from 'react-router-dom';
+import { FUNC_ADD_FAVORITE } from '../../API/API_favorite';
 
 const Feedback = () => {
     const user = useSelector(state=>state.user.user)
@@ -27,6 +28,7 @@ const Feedback = () => {
         )
         setSendReviews(true)
         setInputValue("")
+        if(inputValue >= 4) FUNC_ADD_FAVORITE({bookID: id,userID: user._id})
     }
     return (
         <div className='container'>

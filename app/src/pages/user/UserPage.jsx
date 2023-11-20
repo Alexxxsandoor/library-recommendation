@@ -1,15 +1,68 @@
-import React from 'react';
-
-
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import UserBookList from './UserBookList'
+import {FUNC_GET_FAVORITE} from '../../API/API_favorite'
+import {FUNC_GET_RECOMMENDATIONS} from '../../API/API_recommendations'
+import SnipperLoader from '../../components/snipperLoader/SnipperLoader';
 
 const UserPage = () => {
+    const user = useSelector(state=>state.user.user)   
+    const [axiosFavoriteBooks, setAxiosFavoriteBooks] = useState([])
+    const [favoriteBooks, setFavoriteBooks] = useState([])
+    const [recommendationsBooks, setRecommendationsBooks] = useState([])
+    const [REC_LIST, setREC_LIST] = useState([])
+    
+    function shuffle(arr) {
+        for (let i = arr.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          const temp = arr[i];
+          arr[i] = arr[j];
+          arr[j] = temp;
+        }
+        return arr;
+      }
+
+    function getRandomWords(arr, n) {
+        const arrLength = arr.length;
+        if (arrLength < n) {
+          return arr.slice(0, arrLength);
+        }
+      
+        shuffle(arr);
+        return arr.slice(0, n);
+      }
+    useEffect(()=>{
+        FUNC_GET_FAVORITE(setAxiosFavoriteBooks, user._id)
+    },[])
+
+    useEffect(()=>{
+        setFavoriteBooks([...axiosFavoriteBooks].map(book => book.bookID))
+        FUNC_GET_RECOMMENDATIONS(setRecommendationsBooks, user._id)
+    },[axiosFavoriteBooks])
+
+    useEffect(()=>{
+        
+
+        if(recommendationsBooks) setREC_LIST(getRandomWords(recommendationsBooks, 10))
+    },[recommendationsBooks])
+
     return (
         <div className='user-view'>
             <div className="container py-4">
-                <h4>User Name: Alexxxsandoor</h4>
-                <h3>Recommendations:</h3>
-                <h3>Favorite books:</h3>
-                <h3>History:</h3>
+                <h4>Користувач: {user.loginName}</h4>
+                <div>
+                    <h3>Рекомендації:</h3>
+                    {favoriteBooks.length <= 2 && <p>Для отримання рекомендацій додайте щось до улюбленних або залишайте гарні відгуки</p>}
+                    {recommendationsBooks.length ? <UserBookList books={REC_LIST}/> : <SnipperLoader />}  
+                </div>
+                <div>
+                    <h3>Улюблені книги:</h3>
+                    {favoriteBooks.length ? <UserBookList books={[...favoriteBooks]}/> : <SnipperLoader />}           
+                </div>
+                <div>
+                    <h3>Історія перегляду:</h3>
+                    {user.history.length ? <UserBookList books={[...user.history]}/> : <SnipperLoader />}
+                </div>
             </div>
         </div>
     );

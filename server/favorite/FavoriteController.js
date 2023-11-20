@@ -1,4 +1,4 @@
-import FavoriteService from "./FavoriteService"
+import FavoriteService from "./FavoriteService.js"
 
 
 class FavoriteController {
@@ -12,7 +12,17 @@ class FavoriteController {
     }
     async getUsersFavorite(req,res){
         try {
+            
             const favorite = await FavoriteService.getUsersFavorite(req.params.id)
+            res.json(favorite)
+        } catch (error) {
+            res.status(500).json(error.message)
+        }
+    }
+
+    async delete(req,res){
+        try {
+            const favorite = await FavoriteService.delete(req.body)
             res.json(favorite)
         } catch (error) {
             res.status(500).json(error.message)

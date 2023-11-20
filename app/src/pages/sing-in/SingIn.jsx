@@ -20,6 +20,7 @@ const SingIn = () => {
         const userLogin = {
             _id:_id,
             loginName:login,
+            history:[],
             isAdmin:admin,
             isLogin: true,
         }

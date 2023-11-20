@@ -1,4 +1,4 @@
-import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
+import {createSlice} from '@reduxjs/toolkit'
 
 const userSlice = createSlice({
     name: 'user',
@@ -6,6 +6,7 @@ const userSlice = createSlice({
         user:{
             _id:"",
             loginName:"",
+            history:["65581893c7e7e8e36b38ef41", "65581893c7e7e8e36b38ef48", "65581893c7e7e8e36b38ef46"], //!!!
             isAdmin:false,
             isLogin: false,
         },
@@ -19,13 +20,18 @@ const userSlice = createSlice({
             state.user = {
                 id:"",
                 loginName:"",
+                history:[],
                 isAdmin:false,
                 isLogin: false,
             }
+        },
+        addHistory(state, action){
+            state.user.history = [...state.user.history, action.payload]
+            state.user.history = state.user.history.filter((it, index) => index === state.user.history.indexOf(it = it.trim()))
         }
     }
 })
 
-export const { setUser , logOut}  = userSlice.actions;
+export const { setUser , logOut, addHistory}  = userSlice.actions;
 
 export default userSlice.reducer
