@@ -11,7 +11,10 @@ const UserPage = () => {
     const [favoriteBooks, setFavoriteBooks] = useState([])
     const [recommendationsBooks, setRecommendationsBooks] = useState([])
     const [REC_LIST, setREC_LIST] = useState([])
+    const [load, setLoad] = useState(false)
     
+    const makeUniq = (arr) => [...new Set(arr)];
+
     function shuffle(arr) {
         for (let i = arr.length - 1; i > 0; i--) {
           const j = Math.floor(Math.random() * (i + 1));
@@ -23,16 +26,24 @@ const UserPage = () => {
       }
 
     function getRandomWords(arr, n) {
-        const arrLength = arr.length;
-        if (arrLength < n) {
-          return arr.slice(0, arrLength);
+        if(recommendationsBooks){
+            const arrLength = arr.length;
+            if (arrLength < n) {
+            return arr.slice(0, arrLength);
+            }
+        
+            shuffle(arr);
+            return arr.slice(0, n);
         }
-      
-        shuffle(arr);
-        return arr.slice(0, n);
-      }
+    }
+
+    
+
     useEffect(()=>{
         FUNC_GET_FAVORITE(setAxiosFavoriteBooks, user._id)
+        setTimeout(() => {
+            setLoad(true)
+        }, 3000);
     },[])
 
     useEffect(()=>{
@@ -41,9 +52,7 @@ const UserPage = () => {
     },[axiosFavoriteBooks])
 
     useEffect(()=>{
-        
-
-        if(recommendationsBooks) setREC_LIST(getRandomWords(recommendationsBooks, 10))
+        if(recommendationsBooks.length) setREC_LIST(getRandomWords(makeUniq([...recommendationsBooks, ...favoriteBooks]), 8))
     },[recommendationsBooks])
 
     return (
@@ -52,8 +61,8 @@ const UserPage = () => {
                 <h4>Користувач: {user.loginName}</h4>
                 <div>
                     <h3>Рекомендації:</h3>
-                    {favoriteBooks.length <= 2 && <p>Для отримання рекомендацій додайте щось до улюбленних або залишайте гарні відгуки</p>}
-                    {recommendationsBooks.length ? <UserBookList books={REC_LIST}/> : <SnipperLoader />}  
+                    {!favoriteBooks.length && <p>Для отримання рекомендацій додайте щось до улюбленних або залишайте гарні відгуки</p>}
+                    {recommendationsBooks.length && load ? <UserBookList books={REC_LIST}/> : <SnipperLoader />}  
                 </div>
                 <div>
                     <h3>Улюблені книги:</h3>
